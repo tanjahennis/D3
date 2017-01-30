@@ -109,29 +109,47 @@
 
 <script>
 
-    data =
-        [
-            {year: "2013-01", value: 53, category: "pants"},
-            {year: "2013-02", value: 165, category: "pants"},
-            {year: "2013-03", value: 269, category: "pants"},
-            {year: "2013-04", value: 344, category: "pants"},
-            {year: "2013-05", value: 376, category: "shirt"},
-            {year: "2013-06", value: 410, category: "shirt"},
-            {year: "2013-07", value: 421, category: "shirt"},
-            {year: "2013-08", value: 405, category: "shirt"},
-            {year: "2013-09", value: 376, category: "shirt"},
-            {year: "2013-10", value: 359, category: "shoes"},
-            {year: "2013-11", value: 392, category: "shoes"},
-            {year: "2013-12", value: 433, category: "shoes"},
-            {year: "2014-01", value: 455, category: "shoes"},
-            {year: "2014-02", value: 478, category: "shoes"}
-        ];
+  data =
+      [
+          {year: "2013-01", value: 53, category: "pants"},
+          {year: "2013-02", value: 165, category: "pants"},
+          {year: "2013-03", value: 269, category: "pants"},
+          {year: "2013-04", value: 344, category: "pants"},
+          {year: "2013-05", value: 376, category: "shirt"},
+          {year: "2013-06", value: 410, category: "shirt"},
+          {year: "2013-07", value: 421, category: "shirt"},
+          {year: "2013-08", value: 405, category: "shirt"},
+          {year: "2013-09", value: 376, category: "shirt"},
+          {year: "2013-10", value: 359, category: "shoes"},
+          {year: "2013-11", value: 392, category: "shoes"},
+          {year: "2013-12", value: 433, category: "shoes"},
+          {year: "2014-01", value: 455, category: "shoes"},
+          {year: "2014-02", value: 478, category: "shoes"}
+      ];
 
-    data.forEach(function(d) {
-        d.date = parseDate(d.year);
-        d.value = +d.value;
-    });
+  data.forEach(function(d) {
+    d.date = Date.parse(d.year);
+    d.value = +d.value;
+  });
 
+  var table = d3.select('#table').append('table');
+
+  var	formatDate = d3.timeFormat("%Y-%m");
+
+  var tbody = table.append('tbody')
+  var tr = tbody.selectAll('tr')
+    .data(data).enter()
+    .append('tr');
+
+  tr.append('td').html(function(d) { return formatDate(d.date); });
+  tr.append('td').html(function(d) { return d.category });
+  tr.append('td').html(function(d) { return d.value });
+
+  var thead = table.append('thead').append('tr')
+
+  thead.append('th').text("date");
+  thead.append('th').text("category");
+  thead.append('th').attr("class", "value").text("value");
 
 </script>
 
