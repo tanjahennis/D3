@@ -131,7 +131,11 @@
       d.value = +d.value;
     });
 
-    // table
+    /////////////
+    //
+    // TABLE
+    //
+    /////////////
     var table = d3.select('#table').append('table');
 
     var	formatDate = d3.timeFormat("%Y-%m");
@@ -151,7 +155,11 @@
     thead.append('th').text("category");
     thead.append('th').attr("class", "value").text("value");
 
-    // barchart
+    /////////////
+    //
+    // BARCHART
+    //
+    /////////////
     var month_margin = {top: 20, right: 20, bottom: 70, left: 40},
       month_width = 900 - month_margin.left - month_margin.right,
       month_height = 300 - month_margin.top - month_margin.bottom;
@@ -169,29 +177,41 @@
     svg.selectAll("rect")
       .data(data)
       .enter().append("rect")
-      .style("fill", "#019875")
+      .style("fill", "#ffa26d")
       .attr("x", function(d) { return x(d.date); })
       .attr("width", 50)
       .attr("y", function(d) { return y(d.value); })
       .attr("height", function(d) { return month_height - y(d.value); });
 
-      var yAxis = d3.axisLeft()
+    var yAxis = d3.axisLeft()
       .scale(y)
-      .tickSize(-month_width) //as wide as our graph
-      .ticks(3);
+      .tickSize(-month_width) // horizontal lines as wide as our graph
+      .ticks(3); // amount of steps depending on value
 
     svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
+      .attr("class", "y axis")
+      .call(yAxis)
 
-        var xAxis = d3.axisBottom()
-         .scale(x)
-         .tickFormat(d3.timeFormat("%Y-%m"));
+    var xAxis = d3.axisBottom()
+     .scale(x)
+     .tickFormat(d3.timeFormat("%Y-%m"));
 
-     svg.append("g")
-         .attr("class", "x axis")
-         .attr("transform", "translate(0," + month_height + ")")
-         .call(xAxis)
+    svg.append("g")
+     .attr("class", "x axis")
+     .attr("transform", "translate(0," + month_height + ")")
+     .call(xAxis)
+
+     svg.selectAll("label")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("class", "label")
+      .style("fill", "#ffa26d")
+      .attr("y", function(d) { return y(d.value); })
+      .attr("x", function(d) { return x(d.date); })
+      .attr("dy", "-.35em") //vertical align middle
+      .attr("dx", ".7em") //vertical align middle
+      .text(function(d){ return d.value; });
 
   </script>
 
