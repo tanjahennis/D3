@@ -213,6 +213,31 @@
       .attr("dx", ".7em") //vertical align middle
       .text(function(d){ return d.value; });
 
+    ///////////////
+    //
+    // DONUT
+    //
+    ///////////////
+    var groupByCategory = d3.nest()
+          .key(function(d) { return d.category; }).sortKeys(d3.ascending)
+          .rollup(function(v) { return d3.sum(v, function(d) {return d.value;})})
+          .entries(data);
+
+    var counter_table = d3.select('#counter_table').append('table');
+
+    var counter_thead = counter_table.append('thead').append('tr')
+
+    counter_thead.append('th').text("category");
+    counter_thead.append('th').attr("class", "value").text("value");
+
+    var counter_tbody = counter_table.append('tbody')
+    var counter_tr = counter_tbody.selectAll('tr')
+        .data(groupByCategory).enter()
+        .append('tr');
+
+    counter_tr.append('td').html(function(d) { return d.key; });
+    counter_tr.append('td').html(function(d) { return d.value });
+
   </script>
 
   </body>
