@@ -238,6 +238,37 @@
     counter_tr.append('td').html(function(d) { return d.key; });
     counter_tr.append('td').html(function(d) { return d.value });
 
+    const donut_width = 250,
+      donut_height = 250;
+      donut_radius = 125;
+
+    var donut_svg = d3.select("#today").append("svg")
+      .attr("width", donut_width)
+      .attr("height", donut_height)
+    var donut = donut_svg.append("g")
+      .attr("transform", "translate(" + donut_width / 2 + "," + donut_height / 2 +")");
+
+    var arc = d3.arc()
+      .outerRadius(donut_radius -10)
+      .innerRadius(donut_radius - 60);
+
+    var pie = d3.pie()
+      .value(function(d) { return d.value; });
+
+    var g = donut.selectAll(".arc")
+      .data(pie(groupByCategory))
+      .enter().append("g")
+      .attr("class", "arc");
+
+    var color = d3.scaleOrdinal()
+      .range(["#D91E18", "#E87E04", "#F4D03F"])
+
+    g.append("path")
+      .attr("d", arc)
+      .style("fill", function(d) {
+        return color(d.data.key);
+      });
+      
   </script>
 
   </body>
