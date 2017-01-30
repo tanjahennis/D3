@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <style>
         html{
@@ -77,39 +77,36 @@
         }
     </style>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-</head>
-<body>
-<div class="main">
-    <h1>Dashboard</h1>
+  </head>
 
-    <!-- We will add the donut and table here -->
-    <h2>Total value</h2>
-    <div class="row">
-        <div id="counter_table"></div>
-        <div id="today"></div>
+  <body>
+    <div class="main">
+      <h1>Dashboard</h1>
+
+      <!-- We will add the donut and table here -->
+      <h2>Total value</h2>
+      <div class="row">
+          <div id="counter_table"></div>
+          <div id="today"></div>
+      </div>
+
+      <!-- We will add barchart here -->
+      <h2>Sales every month</h2>
+      <div class="row">
+          <div id="month">
+          </div>
+      </div>
+
+      <!-- We will add the data table here -->
+      <h2>Data</h2>
+      <div class="row">
+          <div id="table">
+          </div>
+      </div>
     </div>
 
-    <!-- We will add barchart here -->
-    <h2>Sales every month</h2>
-    <div class="row">
-        <div id="month">
-        </div>
-    </div>
-
-    <!-- We will add the data table here -->
-    <h2>Data</h2>
-    <div class="row">
-        <div id="table">
-        </div>
-    </div>
-
-</div>
-
-
-
-<script>
-
-  data =
+  <script>
+    data =
       [
           {year: "2013-01", value: 53, category: "pants"},
           {year: "2013-02", value: 165, category: "pants"},
@@ -127,31 +124,31 @@
           {year: "2014-02", value: 478, category: "shoes"}
       ];
 
-  data.forEach(function(d) {
-    d.date = Date.parse(d.year);
-    d.value = +d.value;
-  });
+    data.forEach(function(d) {
+      d.date = Date.parse(d.year);
+      d.value = +d.value;
+    });
 
-  var table = d3.select('#table').append('table');
+    var table = d3.select('#table').append('table');
 
-  var	formatDate = d3.timeFormat("%Y-%m");
+    var	formatDate = d3.timeFormat("%Y-%m");
 
-  var tbody = table.append('tbody')
-  var tr = tbody.selectAll('tr')
-    .data(data).enter()
-    .append('tr');
+    var tbody = table.append('tbody')
+    var tr = tbody.selectAll('tr')
+      .data(data).enter()
+      .append('tr');
 
-  tr.append('td').html(function(d) { return formatDate(d.date); });
-  tr.append('td').html(function(d) { return d.category });
-  tr.append('td').html(function(d) { return d.value });
+    tr.append('td').html(function(d) { return formatDate(d.date); });
+    tr.append('td').html(function(d) { return d.category });
+    tr.append('td').html(function(d) { return d.value });
 
-  var thead = table.append('thead').append('tr')
+    var thead = table.append('thead').append('tr')
 
-  thead.append('th').text("date");
-  thead.append('th').text("category");
-  thead.append('th').attr("class", "value").text("value");
+    thead.append('th').text("date");
+    thead.append('th').text("category");
+    thead.append('th').attr("class", "value").text("value");
 
-</script>
+  </script>
 
-</body>
+  </body>
 </html>
